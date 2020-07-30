@@ -4,10 +4,11 @@ name = gets.chomp  # remove the newline
 puts "What's your age?"
 
 # convert string to integer
-# age = gets.chomp.to_i   
-
 age = gets.chomp
+
+#age = gets.chomp.to_i
 # Validating age (Should be number)
 age = age.scan(/\d+/).map(&:to_i)[0]
+
 
 puts "So, your name is #{name} and you are #{age} old."

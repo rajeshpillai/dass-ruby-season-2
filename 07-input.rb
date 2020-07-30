@@ -11,4 +11,3 @@ age = gets.chomp
 age = age.scan(/\d+/).map(&:to_i)[0]
 
 puts "So, your name is #{name} and you are #{age} old."
-

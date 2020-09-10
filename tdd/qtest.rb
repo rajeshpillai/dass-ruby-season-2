@@ -77,13 +77,22 @@ def is_equal(expected, actual)
 end
 
 # New feature
-def expect (actual) 
-  Actual.new(actual)
+# def expect (actual) 
+#   Actual.new(actual)
+# end
+
+# with block
+def expect (actual=nil, &block) 
+  Actual.new(actual || block)
 end
 
 
 def eq(expected) 
   Expectations::Equal.new(expected)
+end
+
+def raise_error(exception_class) 
+  Expectations::Error.new(exception_class)
 end
 
 class Actual 
@@ -109,6 +118,33 @@ class Expectations
           "Expected #{@expected.inspect} but got #{actual.inspect}"
         )
       end   
+    end
+  end
+
+  class Error 
+    def initialize(exception_class) 
+      @exception_class = exception_class
+    end
+
+    def run (actual_block) 
+      begin 
+        actual_block.call 
+      rescue @exception_class
+        return 
+      rescue StandardError => e 
+        raise AssertionError.new(
+          format("Expected to see error %s, but saw %s",
+              @exception_class.inspect,
+              e.inspect)
+        )
+      end
+
+      # raise if no exceptions
+      # To test this:
+      # from expectations: test 2: remove raise ArgumentError
+      raise AssertionError.new(
+        format("Expected to see error %s, but got nothing",
+          @exception_class.inspect))
     end
   end
 end

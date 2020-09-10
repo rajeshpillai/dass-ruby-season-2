@@ -8,6 +8,7 @@ describe "some examples" do
   end
 
   it "can pass after failing" do 
+    puts "ok"
     (1 + 1).should == 3
   end
 end

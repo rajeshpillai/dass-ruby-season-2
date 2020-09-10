@@ -76,6 +76,43 @@ def is_equal(expected, actual)
   expected == actual   # true or false
 end
 
+# New feature
+def expect (actual) 
+  Actual.new(actual)
+end
+
+
+def eq(expected) 
+  Expectations::Equal.new(expected)
+end
+
+class Actual 
+  def initialize(actual) 
+    @actual = actual
+  end
+
+  def to(expectation) 
+    expectation.run(@actual)
+  end
+
+end
+
+class Expectations 
+  class Equal 
+    def initialize(expected) 
+      @expected = expected
+    end
+
+    def run (actual) 
+      unless actual == @expected
+        raise AssertionError.new(
+          "Expected #{@expected.inspect} but got #{actual.inspect}"
+        )
+      end   
+    end
+  end
+end
+
 # Open class
 class Object
   def should 

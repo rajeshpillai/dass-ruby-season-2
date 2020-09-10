@@ -10,8 +10,13 @@ describe "some examples" do
   it "can fail" do
     (1 + 1).should == 3
   end
+end
 
-  it "can pass after failing" do 
+# New rspec like syntax
+describe "expectations" do 
+  it "can expect values" do 
+    # expect(1 + 1).to(eq(2))
+    expect(1 + 1).to eq 2
   end
 end
 
@@ -19,7 +24,7 @@ end
 class SimpleTest
   #macro methods ruby
   describe "Basic test"  do 
-    it "1+1 = 2"  do 
+    it "1 + 1 = 2"  do 
       is_equal 2, 1 + 1
     end
 

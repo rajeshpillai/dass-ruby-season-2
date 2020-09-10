@@ -4,10 +4,17 @@ def describe (desc, &block)
 end
 
 
+GREEN = "\e[32m"
+RED   = "\e[31m"
+RESET = "\e[0m"
+
 def it (desc, &block) 
   begin 
+    $stdout.write "  - #{desc}"
     result = block.call 
+    puts " #{GREEN}(ok)#{RESET}"
   rescue Exception => e 
+    puts "#{RED}(fail)#{RESET}"
     puts e 
     puts e.backtrace
   end

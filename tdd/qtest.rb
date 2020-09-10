@@ -8,18 +8,8 @@ GREEN = "\e[32m"
 RED   = "\e[31m"
 RESET = "\e[0m"
 
-def it (desc, &block) 
-  begin 
-    $stdout.write "  - #{desc}"
-    result = block.call 
-    puts " #{GREEN}(ok)#{RESET}"
-  rescue Exception => e 
-    puts "#{RED}(fail)#{RESET}"
-    puts e 
-    puts e.backtrace
-  end
-end
 
+# Approach 1
 
 # def it (desc, &block) 
 #   result = block.call 
@@ -29,6 +19,39 @@ end
 #     puts "     #{desc.ljust(40, '.')} failed"
 #   end
 # end
+
+# Approach 2
+# def it (desc, &block) 
+#   begin 
+#     $stdout.write "  - #{desc}"
+#     result = block.call 
+#     puts " #{GREEN}(ok)#{RESET}"
+#   rescue Exception => e 
+#     puts "#{RED}(fail)#{RESET}"
+#     puts e.backtrace
+#     puts e 
+#   end
+# end
+
+
+# Approach 3
+def it (desc, &block) 
+  begin 
+    $stdout.write "  - #{desc}"
+    result = block.call 
+    puts " #{GREEN}(ok)#{RESET}"
+  rescue Exception => e 
+    puts "#{RED}(fail)#{RESET}"
+    # puts e.backtrace.reverse
+    # format the output
+    puts [
+      "#{RED}Backtract:#{RESET}",
+      e.backtrace.reverse,
+      "#{RED}#{e}#{RESET}"
+    ].flatten.map {|line| "\t#{line}"}.join("\n")
+  end
+end
+
 
 def is_equal(expected, actual)
   expected == actual   # true or false

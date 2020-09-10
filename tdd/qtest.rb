@@ -34,7 +34,26 @@ RESET = "\e[0m"
 # end
 
 
-# Approach 3
+# Approach 3 - Style error message
+# def it (desc, &block) 
+#   begin 
+#     $stdout.write "  - #{desc}"
+#     result = block.call 
+#     puts " #{GREEN}(ok)#{RESET}"
+#   rescue Exception => e 
+#     puts "#{RED}(fail)#{RESET}"
+#     # puts e.backtrace.reverse
+#     # format the output
+#     puts [
+#       "#{RED}Backtract:#{RESET}",
+#       e.backtrace.reverse,
+#       "#{RED}#{e}#{RESET}"
+#     ].flatten.map {|line| "\t#{line}"}.join("\n")
+#   end
+# end
+
+
+# Approach 4 - Let's put backtrace on its own line
 def it (desc, &block) 
   begin 
     $stdout.write "  - #{desc}"
@@ -46,7 +65,7 @@ def it (desc, &block)
     # format the output
     puts [
       "#{RED}Backtract:#{RESET}",
-      e.backtrace.reverse,
+      e.backtrace.reverse.map {|line| "#{RED}|#{RESET} #{line}"},
       "#{RED}#{e}#{RESET}"
     ].flatten.map {|line| "\t#{line}"}.join("\n")
   end
